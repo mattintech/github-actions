@@ -10,9 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
-    outputs:
-      job_output: ${{ steps.step1.outputs.my_output }}
-    
     env:
       GLOBAL_VAR: "Global1"
       GLOBAL_VAR2: "None"
@@ -32,7 +29,7 @@ jobs:
       run: |
         echo "Attempting to use output between steps"
         TMPOUT=$(./varscript.sh)
-        echo "::set-output name=my_output::$TMPOUT"
+        echo "MY_OUTPUT=$TMPOUT" >> $GITHUB_OUTPUT
 
     - name: Print environment variables
       run: |
@@ -52,4 +49,4 @@ jobs:
       run: |
         echo "Combining variables: $GLOBAL_VAR, $GLOBAL_VAR2 and $SCRIPT_VAR"
         echo "Output from previous steps"
-        echo "v${{ needs.build.output.job_output}}"
+        echo "v${{ steps.step1.outputs.MY_OUTPUT }}"
