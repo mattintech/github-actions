@@ -22,7 +22,7 @@ jobs:
       uses: actions/checkout@v3
 
             
-    - name: Setting output
+    - name: Setting Up script output
       run: |
         echo "Making varscript.sh executable"
         chmod +x varscript.sh
@@ -31,7 +31,7 @@ jobs:
       id: step1
       run: |
         echo "Attempting to use output between steps"
-        TMPOUT=$(./varsript.sh)
+        TMPOUT=$(./varscript.sh)
         echo "::set-output name=my_output::$TMPOUT"
 
     - name: Print environment variables
