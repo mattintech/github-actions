@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     
     env:
-      GLOBAL_VAR: "This is a global environment variable"
+      GLOBAL_VAR: "Global1"
+      GLOBAL_VAR2: "None"
 
     steps:
     - name: Checkout code
@@ -22,14 +23,15 @@ jobs:
         echo "GLOBAL_VAR is $GLOBAL_VAR"
         echo "LOCAL_VAR is $LOCAL_VAR"
       env:
-        LOCAL_VAR: "This is a local environment variable"
+        local_var: "This is a local environment variable"
 
     - name: Run a script with environment variables
       run: |
         echo "Running a script with env vars"
+        export GLOBAL_VAR2=$(./varscript.sh)
       env:
-        SCRIPT_VAR: "This is a script-specific environment variable"
+        SCRIPT_VAR: "fromScriptVar"
 
     - name: Use environment variables in commands
       run: |
-        echo "Combining variables: $GLOBAL_VAR and $SCRIPT_VAR"
+        echo "Combining variables: $GLOBAL_VAR, $GLOBAL_VAR2 and $SCRIPT_VAR"
