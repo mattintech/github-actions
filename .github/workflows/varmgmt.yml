@@ -28,6 +28,7 @@ jobs:
     - name: Run a script with environment variables
       run: |
         echo "Running a script with env vars"
+        chmod +x varscript.sh
         export GLOBAL_VAR2=$(./varscript.sh)
       env:
         SCRIPT_VAR: "fromScriptVar"
