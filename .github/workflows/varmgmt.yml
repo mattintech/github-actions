@@ -28,8 +28,8 @@ jobs:
       id: step1
       run: |
         echo "Attempting to use output between steps"
-        TMPOUT=$(./varscript.sh)
-        echo "MY_OUTPUT=$TMPOUT" >> $GITHUB_OUTPUT
+        TMPOUT=$(./varscript.sh)"
+        echo "myPoutput=$TMPOUT" >> $GITHUB_OUTPUT
 
     - name: Print environment variables
       run: |
@@ -49,4 +49,4 @@ jobs:
       run: |
         echo "Combining variables: $GLOBAL_VAR, $GLOBAL_VAR2 and $SCRIPT_VAR"
         echo "Output from previous steps"
-        echo "v${{ steps.step1.outputs.MY_OUTPUT }}"
+        echo "v${{ steps.step1.outputs.my_output }}"
