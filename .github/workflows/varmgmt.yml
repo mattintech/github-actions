@@ -6,28 +6,30 @@ on:
   push:
     branches: [ "master" ]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
     runs-on: ubuntu-latest
+    
+    env:
+      GLOBAL_VAR: "This is a global environment variable"
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo "Did this testwork? $ThisIsATest"
-        env: 
-          ThisIsAtest: "HelloWorld"
-       
-        
+    - name: Print environment variables
+      run: |
+        echo "GLOBAL_VAR is $GLOBAL_VAR"
+        echo "LOCAL_VAR is $LOCAL_VAR"
+      env:
+        LOCAL_VAR: "This is a local environment variable"
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
-        run: |
-          echo Add other actions to build,
-          echo "$thisIsATest"
+    - name: Run a script with environment variables
+      run: |
+        echo "Running a script with env vars"
+      env:
+        SCRIPT_VAR: "This is a script-specific environment variable"
+
+    - name: Use environment variables in commands
+      run: |
+        echo "Combining variables: $GLOBAL_VAR and $SCRIPT_VAR"
