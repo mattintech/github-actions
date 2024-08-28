@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     
+    outputs:
+      job_output: ${{ steps.step1.outputs.my_output }}
+    
     env:
       GLOBAL_VAR: "Global1"
       GLOBAL_VAR2: "None"
@@ -17,6 +20,19 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
+
+            
+    - name: Setting output
+      run: |
+        echo "Making varscript.sh executable"
+        chmod +x varscript.sh
+
+    - name: Setting output
+      id: step1
+      run: |
+        echo "Attempting to use output between steps"
+        TMPOUT=$(./varsript.sh)
+        echo "::set-output name=my_output::$TMPOUT"
 
     - name: Print environment variables
       run: |
@@ -28,7 +44,6 @@ jobs:
     - name: Run a script with environment variables
       run: |
         echo "Running a script with env vars"
-        chmod +x varscript.sh
         export GLOBAL_VAR2=$(./varscript.sh)
       env:
         SCRIPT_VAR: "fromScriptVar"
@@ -36,3 +51,5 @@ jobs:
     - name: Use environment variables in commands
       run: |
         echo "Combining variables: $GLOBAL_VAR, $GLOBAL_VAR2 and $SCRIPT_VAR"
+        echo "Output from previous steps"
+        echo "v${{ needs.build.output.job_output}}"
