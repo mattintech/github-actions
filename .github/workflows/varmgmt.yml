@@ -49,4 +49,5 @@ jobs:
       run: |
         echo "Combining variables: $GLOBAL_VAR, $GLOBAL_VAR2 and $SCRIPT_VAR"
         echo "Output from previous steps"
-        echo "v${{ steps.step1.outputs.my_output }}"
+        TAG_NAME="v${{ steps.step1.outputs.my_output }}"
+        echo "HERE IS THE TAG: $TAG_NAME"
